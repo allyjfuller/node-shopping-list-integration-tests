@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy: pure-fjord-22863
+  provider: heroku
+  api_key:
+    secure: DV4wITMA/lec8Hun2m0uW8j6k8dL9oIlfXmvg6t4kKm2x4ZsNmmZHRmuMbwThoEzowwthOWwRUrRRR+tFSZinKuBtL+2rDwKVPK9NvYUkVS1jVyX6xC/nPDwB1rdV15WLSpoeIDWWnfGopGa5l6/PeGIJExzeLpL9WktGwgRtG4V1HLxDeCtCgRpIMY6SxSAPIc4v1smKaqWMZoe1HdvPy9/ygVryl/qqVRDmsnQGUNG1mMcabCa0r9KsgOEnuHBmnmvMmN8Oic+Qwc8tm8Lf8+3rUDaJM99EzAo+kUuklUPRIHIJgashpj7YR+iBRL/+G2wzxO25qm8e76dYXsRZlPyZM9IXIwDLW8pnaSNHTucRmMpwO3rHv6l7BEvwNXU2Xjko7ETwhQ1ogVdrv+LkV2O8BdV0Z+9W9KliU+z6KR4hdAWxFxfIK5RQIMt539mVwl86zlzTMdRWuQ6vVuCbJXfx4oWmtZISaN9F6j3pheeQEgPFBpgOm7rrAX40+BhnTHvZTk2h0I6u+pMPbamWwJH0lTyDVB2XY/+Y4dqnEgd+q3JFJb7EuDMe8fBltRuzHGH1BGbINLfubtF2od6XfdP0FIZh92IwtJikQxf8dd9D548t6MeaHO8unr5tU66ty8/nbSLtP9e0Y/T4AzbnaZCG29cNxTAI8isjtJRJN8=
+  app: node-shopping-list-integration-tests
+  on:
+    repo: allyjfuller/node-shopping-list-integration-tests
