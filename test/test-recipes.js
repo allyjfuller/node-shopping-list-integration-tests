@@ -1,7 +1,7 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 
-const { app, runServer, closeServer } = require("../require");
+const { app, runServer, closeServer } = require("../server");
 
 // Lets us use 'should' style syntax
 const expect = chai.should();
@@ -22,7 +22,7 @@ describe('Recipes', function() {
 	});
 
 // Test for GET requests
-	it('should list items on GET', function() {
+	it('should list recipes on GET', function() {
 		return chai.request(app)
 // Make request to '/recipes'
 		.get('/recipes')
@@ -32,10 +32,9 @@ describe('Recipes', function() {
 			should(res.body).to.be.a('array');
 			should(res.body.length).to.be.at.least(1);
 // Inspect response object to prove it has right code & keys
-			const expectedKeys = ['id', 'name', 'ingredients'];
 			res.body.forEach(function(item) {
 				should(item).to.be.a('object');
-				should(item).to.include.keys(expectedKeys);
+				should(item).to.include.keys('id', 'name', 'ingredients');
 			});
 		});
 
@@ -44,17 +43,22 @@ describe('Recipes', function() {
 // Test for POST requests
 	it('should add an item on POST', function() {
 // Post request for data with new item
-		const newItem = {name: 'Grilled Cheese', ingredients: ['2 Bread Slices', '2 Cheese Slices']};
+		const newRecipe = { 
+			name: 'Grilled Cheese', 
+			ingredients: ['2 Bread Slices', '2 Cheese Slices'] 
+		};
 		return chai.request(app)
 			.post('/recipes')
-			.send(newItem)
+			.send(newRecipe)
 			.then(function(res) {
 // Inspect reponse for right status code
 				should(res).to.have.status.(201);
-				should(res).to.be.a('object');
-				should(res.body).to.be.a('array');
+				should(res).to.be.json;
+				should(res.body).to.be.a('object');
 				should(res.body).to.include.keys('id', 'name', 'ingredients');
-				should(res.body.id).to.not.equal(Object.assign(newItem, {id: res.body.id}));
+				should(res.body.name).equal(newRecipe.name)
+				should(res.body.ingredients).to.be.a('array');
+				should(res.body.ingredients).inculde.members(newRecipe.ingredients);
 			});
 		});
 
@@ -62,7 +66,7 @@ describe('Recipes', function() {
 	it('should update items on PUT', function() {
 		const updateData = {
 			name: 'foo',
-			ingredients: ['foo', 'bar'],
+			ingredients: ['bizz', 'bar']
 		};
 
 		return chai.request(app)
