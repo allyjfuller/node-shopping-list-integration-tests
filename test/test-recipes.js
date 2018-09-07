@@ -4,10 +4,10 @@ const chaiHttp = require("chai-http");
 const { app, runServer, closeServer } = require("../server");
 
 // Lets us use 'should' style syntax
-const expect = chai.should();
+const expect = chai.expect;
 
 // Lets us make HTTP requests
-chai.us(chaiHttp);
+chai.use(chaiHttp);
 
 describe('Recipes', function() {
 
@@ -27,14 +27,14 @@ describe('Recipes', function() {
 // Make request to '/recipes'
 		.get('/recipes')
 		.then(function(res) {
-			should(res).to.have.status(200);
-			should(res).to.be.json;
-			should(res.body).to.be.a('array');
-			should(res.body.length).to.be.at.least(1);
+			expect(res).to.have.status(200);
+			expect(res).to.be.json;
+			expect(res.body).to.be.a('array');
+			expect(res.body.length).to.be.at.least(1);
 // Inspect response object to prove it has right code & keys
 			res.body.forEach(function(item) {
-				should(item).to.be.a('object');
-				should(item).to.include.keys('id', 'name', 'ingredients');
+				expect(item).to.be.a('object');
+				expect(item).to.include.keys('id', 'name', 'ingredients');
 			});
 		});
 
@@ -52,13 +52,13 @@ describe('Recipes', function() {
 			.send(newRecipe)
 			.then(function(res) {
 // Inspect reponse for right status code
-				should(res).to.have.status.(201);
-				should(res).to.be.json;
-				should(res.body).to.be.a('object');
-				should(res.body).to.include.keys('id', 'name', 'ingredients');
-				should(res.body.name).equal(newRecipe.name)
-				should(res.body.ingredients).to.be.a('array');
-				should(res.body.ingredients).inculde.members(newRecipe.ingredients);
+				expect(res).to.have.status(201);
+				expect(res).to.be.json;
+				expect(res.body).to.be.a('object');
+				expect(res.body).to.include.keys('id', 'name', 'ingredients');
+				expect(res.body.name).equal(newRecipe.name)
+				expect(res.body.ingredients).to.be.a('array');
+				expect(res.body.ingredients).include.members(newRecipe.ingredients);
 			});
 		});
 
@@ -82,7 +82,7 @@ describe('Recipes', function() {
 			})
 // Prove PUT request has right status code & returns updated item
 			.then(function(res) {
-				should(res).to.have.status(204);
+				expect(res).to.have.status(204);
 			});
 		});
 
@@ -98,7 +98,7 @@ describe('Recipes', function() {
 			})
 // Make sure I get 204 status
 			.then(function(res) {
-				should(res).to.have.status(204);
+				expect(res).to.have.status(204);
 			});
 		});
 });
